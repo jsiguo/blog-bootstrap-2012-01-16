@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyBlog</title>
+  <%= stylesheet_link_tag    "bootstrap.min" %>
+  <%= csrf_meta_tags %>
+  <style type="text/css" media="screen">
+  	body { padding-top:60px }
+  </style>
+</head>
+<body>
+<div class="topbar">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+         <p class="pull-left"><%= link_to '首页', root_path %> </p>
+          <% if user_signed_in? %>
+          <ul>
+              <li><%= link_to current_user.username,posts_path,:title => '用户首页' %></li>
+              <li><%= link_to('密码修改', edit_registration_path(:user)) %></li>
+              <li><%= link_to '个人信息修改', edit_profile_path(current_user) %></li>
+          </ul>
+              <p class="pull-right"><%= link_to "退出", destroy_user_session_path %></p>
+  <% else %>
+                  <p class="pull-right"><%= link_to "注册", new_user_registration_path %></p> <p class="pull-right">or </p>
+                  <p class="pull-right"><%= link_to "登录", new_user_session_path %></p>
+  <% end %>
+        </div>
+      </div>
+</div>
+<div class="container-fluid">
+	<% if flash[:notice] %>
+		<div class="alert-message success"><%= flash[:notice] %></div>
+	<% end %>
+	<%= yield %>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>myblog</title>
+  <%= stylesheet_link_tag    "bootstrap.min" %>
+   <%= javascript_include_tag  "application" %>
+  <%= csrf_meta_tags %>
+  <style type="text/css" media="screen">
+  	body { padding-top:60px }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+         <p class="pull-left"><%= link_to '首页', root_path %> </p>
+          <% if user_signed_in? %>
+          <ul>
+              <li><%= link_to current_user.username,posts_path,:title => '用户首页' %></li>
+              <li><%= link_to('密码修改', edit_registration_path(:user)) %></li>
+              <li><%= link_to '个人信息修改', edit_profile_path(current_user) %></li>
+          </ul>
+              <p class="pull-right"><%= link_to "退出", destroy_user_session_path %></p>
+  <% else %>
+                  <p class="pull-right"><%= link_to "注册", new_user_registration_path %></p> <p class="pull-right">or </p>
+                  <p class="pull-right"><%= link_to "登录", new_user_session_path %></p>
+  <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+    <h2>类别</h2>
+  <ul>
+    <li><%= link_to'日志'%></li>
+    <li><%= link_to'技术' %></li>
+    <li><%= link_to'转载' %></li>
+  </ul>
+ </div>
+    <div class="content">
+    <div class="container-fluid">
+	<% if flash[:notice] %>
+		<div class="alert-message success"><%= flash[:notice] %></div>
+	<% end %>
+	<%= yield %>
+</div>
+    </div>
+  </div>
+
+</body>
+</html>
